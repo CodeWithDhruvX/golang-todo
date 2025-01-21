@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { catchError, Observable, throwError } from "rxjs";
 import { Task } from "../../models/task.model"; // Correct import
 
 @Injectable({
@@ -8,6 +8,7 @@ import { Task } from "../../models/task.model"; // Correct import
 })
 export class TaskService {
     private apiUrl = "http://localhost:8080/tasks";
+  handleError: any;
 
     constructor(private http: HttpClient) { }
 
@@ -19,9 +20,11 @@ export class TaskService {
         return this.http.post<Task>(this.apiUrl, { title });
       }
     
-      updateTask(id: number): Observable<void> {
-        return this.http.put<void>(`${this.apiUrl}/${id}`, {});
+      updateTask(taskId: number): Observable<any> {
+        const url = `${this.apiUrl}/${taskId}`;
+        return this.http.put(url, {}, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
       }
+    
     
       deleteTask(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);

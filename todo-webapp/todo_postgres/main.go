@@ -9,9 +9,10 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/gorilla/mux"   // package for http router and URL matcher
-	"github.com/joho/godotenv" // package to read .env file
-	_ "github.com/lib/pq"      // package for postgres driver
+	"github.com/gorilla/handlers" // package for postgres driver
+	"github.com/gorilla/mux"      // package for http router and URL matcher
+	"github.com/joho/godotenv"    // package to read .env file
+	_ "github.com/lib/pq"
 )
 
 type Task struct {
@@ -40,13 +41,20 @@ func main() {
 
 	// router setup
 	router := mux.NewRouter()
-	router.HandleFunc("/tasks", corsMiddleware(getTasks)).Methods("GET")
-	router.HandleFunc("/tasks", corsMiddleware(createTask)).Methods("POST")
-	router.HandleFunc("/tasks/{id}", corsMiddleware(updateTask)).Methods("PUT")
-	router.HandleFunc("/tasks/{id}", corsMiddleware(deleteTask)).Methods("DELETE")
+	router.HandleFunc("/tasks/{id:[0-9]+}", updateTask).Methods("PUT")
+	router.HandleFunc("/tasks", getTasks).Methods("GET")
+	router.HandleFunc("/tasks", createTask).Methods("POST")
+	router.HandleFunc("/tasks", deleteTask).Methods("DELETE")
+
+	// Allow CORS
+	corsHandler := handlers.CORS(
+		handlers.AllowedOrigins([]string{"http://localhost:5000"}),
+		handlers.AllowedMethods([]string{"PUT", "GET", "POST", "DELETE"}),
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
+	)(router)
 
 	// start the server
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(":8080", corsHandler)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
@@ -139,6 +147,7 @@ func createTask(w http.ResponseWriter, r *http.Request) {
 
 // updateTask: Mark Task as Done
 func updateTask(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
@@ -160,7 +169,6 @@ func updateTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	response := map[string]string{
 		"message": "task updated!",
