@@ -41,9 +41,9 @@ func main() {
 	// router setup
 	router := mux.NewRouter()
 	router.HandleFunc("/tasks", corsMiddleware(getTasks)).Methods("GET")
-	router.HandleFunc("/tasks", createTask).Methods("POST")
-	router.HandleFunc("/tasks/{id}", updateTask).Methods("PUT")
-	router.HandleFunc("/tasks/{id}", deleteTask).Methods("DELETE")
+	router.HandleFunc("/tasks", corsMiddleware(createTask)).Methods("POST")
+	router.HandleFunc("/tasks/{id}", corsMiddleware(updateTask)).Methods("PUT")
+	router.HandleFunc("/tasks/{id}", corsMiddleware(deleteTask)).Methods("DELETE")
 
 	// start the server
 	http.ListenAndServe(":8080", router)
