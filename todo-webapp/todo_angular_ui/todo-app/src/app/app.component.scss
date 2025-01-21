@@ -1,0 +1,26 @@
+.task-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+  }
+  
+  .task-list {
+    width: 45%;
+  }
+  
+  .list {
+    border: 2px dashed #ccc;
+    padding: 10px;
+    min-height: 200px;
+    background-color: #f9f9f9;
+  }
+  
+  .task-item {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: grab;
+  }
+  

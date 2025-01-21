@@ -20,4 +20,42 @@ export class TasksEffects {
             )
         ));
 
+
+        createTask$ = createEffect(() =>
+            this.actions$.pipe(
+              ofType(TaskActions.createTask),
+              mergeMap(action =>
+                this.taskService.createTask(action.title).pipe(
+                  map(task => TaskActions.createTaskSuccess({ task })),
+                  catchError(error => of(TaskActions.createTaskFailure({ error })))
+                )
+              )
+            )
+          );
+        
+          updateTask$ = createEffect(() =>
+            this.actions$.pipe(
+              ofType(TaskActions.updateTask),
+              mergeMap(action =>
+                this.taskService.updateTask(action.id).pipe(
+                  map(() => TaskActions.updateTaskSuccess({ id: action.id })),
+                  catchError(error => of(TaskActions.updateTaskFailure({ error })))
+                )
+              )
+            )
+          );
+          
+        
+          deleteTask$ = createEffect(() =>
+            this.actions$.pipe(
+              ofType(TaskActions.deleteTask),
+              mergeMap(action =>
+                this.taskService.deleteTask(action.id).pipe(
+                  map(() => TaskActions.deleteTaskSuccess({ id: action.id })),
+                  catchError(error => of(TaskActions.deleteTaskFailure({ error })))
+                )
+              )
+            )
+          );
+
 }

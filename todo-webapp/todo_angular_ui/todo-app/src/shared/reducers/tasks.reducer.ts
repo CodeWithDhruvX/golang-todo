@@ -21,5 +21,23 @@ export const taskReducer = createReducer(
     on(TaskActions.loadTasksFailure, (state, { error }) => ({
         ...state,
         error
-    }))
+    })),
+
+    on(TaskActions.createTaskSuccess, (state, { task }) => ({
+        ...state,
+        tasks: [...state.tasks, task],
+      })),
+      on(TaskActions.createTaskFailure, (state, { error }) => ({ ...state, error })),
+    
+      on(TaskActions.updateTaskSuccess, (state, { id }) => ({
+        ...state,
+        tasks: state.tasks.map(task => (task.id === id ? { ...task, done: true } : task)),
+      })),
+      on(TaskActions.updateTaskFailure, (state, { error }) => ({ ...state, error })),
+    
+      on(TaskActions.deleteTaskSuccess, (state, { id }) => ({
+        ...state,
+        tasks: state.tasks.filter(task => task.id !== id),
+      })),
+      on(TaskActions.deleteTaskFailure, (state, { error }) => ({ ...state, error }))
 );

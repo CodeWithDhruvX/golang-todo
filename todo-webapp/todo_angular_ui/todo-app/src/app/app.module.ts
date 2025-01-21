@@ -8,6 +8,8 @@ import { EffectsModule } from "@ngrx/effects";
 import { TasksEffects } from "../shared/effects/tasks.effects";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { AppRoutingModule } from "./app.routing";
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { RouterModule } from "@angular/router";
 
 
 @NgModule({
@@ -17,10 +19,11 @@ import { AppRoutingModule } from "./app.routing";
     imports: [
         BrowserModule,
         HttpClientModule,
-        AppRoutingModule,
-        StoreModule.forRoot({task:taskReducer}), // setup the global state management using NGRX
-        EffectsModule.forRoot([TasksEffects]), // handles side effects like API calls,logging in reponse to actions dispatched to the store
-        StoreDevtoolsModule.instrument({maxAge:25})// integrate redux devtools
+        DragDropModule,
+        StoreModule.forRoot({ tasks: taskReducer }),
+        EffectsModule.forRoot([TasksEffects]),
+        StoreDevtoolsModule.instrument({ maxAge: 25 }),
+        RouterModule
     ],
     providers: [],
     bootstrap: [AppComponent]
