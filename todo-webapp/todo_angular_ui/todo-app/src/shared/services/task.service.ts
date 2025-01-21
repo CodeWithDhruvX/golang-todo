@@ -1,19 +1,17 @@
 import { HttpClient } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Task } from "zone.js/lib/zone-impl";
-
+import { Task } from "../../models/task.model"; // Correct import
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskService {
-    private apiUrl = "http:localhost:8080/tasks";
+    private apiUrl = "http://localhost:8080/tasks";
 
     constructor(private http: HttpClient) { }
 
-    getTasks() : Observable<Task[]> {
+    getTasks(): Observable<Task[]> {
         return this.http.get<Task[]>(this.apiUrl);
     }
-
 }

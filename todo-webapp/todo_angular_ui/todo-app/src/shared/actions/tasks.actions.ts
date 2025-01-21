@@ -1,6 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Task } from "zone.js/lib/zone-impl";
-
+import { Task } from "../../models/task.model";
 
 
 export const loadTasks = createAction('[Tasks API] Load Tasks');
