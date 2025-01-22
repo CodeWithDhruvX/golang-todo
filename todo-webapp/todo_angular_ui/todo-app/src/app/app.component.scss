@@ -1,26 +1,107 @@
+/* Task Container */
 .task-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px;
+  display: flex;
+  justify-content: space-between; /* Align the lists side by side */
+  gap: 20px; /* Space between the lists */
+  margin: 20px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* Task List */
+.task-list {
+  flex: 1; /* Take equal space for both lists */
+  max-width: 45%; /* Limit maximum width to keep lists side by side */
+  min-width: 300px; /* Ensure a minimum width for smaller screens */
+  box-sizing: border-box; /* Include padding and borders in width calculation */
+}
+
+/* List Styles */
+.list {
+  border: 2px dashed #ccc;
+  padding: 15px;
+  min-height: 200px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.list:hover {
+  background-color: #f1f1f1;
+}
+
+/* Task Items */
+.task-item {
+  background-color: #fff;
+  margin-bottom: 10px; /* Add spacing between tasks */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: grab;
+  transition: box-shadow 0.3s ease;
+}
+
+.task-item:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add Task Form */
+.add-task {
+  display: flex;
+  align-items: center; /* Vertically align input and button */
+  gap: 10px; /* Add space between input and button */
+  margin-bottom: 20px;
+}
+
+.task-input {
+  flex: 1; /* Adjust input width dynamically */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.task-button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.task-button:hover {
+  background-color: #218838;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .task-container {
+    flex-direction: column; /* Stack the lists vertically on smaller screens */
+    gap: 10px; /* Reduce spacing for smaller screens */
   }
-  
+
   .task-list {
-    width: 45%;
+    max-width: 100%; /* Full width for smaller screens */
   }
-  
-  .list {
-    border: 2px dashed #ccc;
-    padding: 10px;
-    min-height: 200px;
-    background-color: #f9f9f9;
-  }
-  
-  .task-item {
-    background-color: #fff;
-    margin: 5px 0;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: grab;
-  }
-  
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #ff1a1a;
+}
+
+.float-right{
+  float: right;
+}

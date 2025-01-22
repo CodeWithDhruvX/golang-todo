@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Task } from '../models/task.model';
-import { loadTasks, updateTask } from '../shared/actions/tasks.actions';
+import { createTask, deleteTask, loadTasks, updateTask } from '../shared/actions/tasks.actions';
 import { TaskState } from '../shared/reducers/tasks.reducer';
 @Component({
   selector: 'app-root',
@@ -12,10 +12,10 @@ import { TaskState } from '../shared/reducers/tasks.reducer';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'todo-app';
+  tasks$: Observable<Task[]>;
   todoTasks: Task[] = [];
   doneTasks: Task[] = [];
-  tasks$:Observable<Task[]>
+  newTaskTitle: string = '';
 
   constructor(private store:Store<{tasks:TaskState}>){
     this.tasks$=this.store.select(state=>state.tasks.tasks)
@@ -48,5 +48,16 @@ export class AppComponent {
         event.currentIndex
       );
     }
+  }
+
+  addTask() {
+    if (this.newTaskTitle.trim()) {
+      this.store.dispatch(createTask({ title: this.newTaskTitle.trim() }));
+      this.newTaskTitle = ''; // Reset the input field
+    }
+  }
+  onDeleteTask(id: number): void {
+    // Dispatch deleteTask action
+    this.store.dispatch(deleteTask({ id }));
   }
 }

@@ -10,6 +10,7 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { AppRoutingModule } from "./app.routing";
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RouterModule } from "@angular/router";
+import { FormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { RouterModule } from "@angular/router";
         StoreModule.forRoot({ tasks: taskReducer }),
         EffectsModule.forRoot([TasksEffects]),
         StoreDevtoolsModule.instrument({ maxAge: 25 }),
-        RouterModule
+        RouterModule,
+        FormsModule
     ],
     providers: [],
     bootstrap: [AppComponent]

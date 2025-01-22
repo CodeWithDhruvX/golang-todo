@@ -44,7 +44,7 @@ func main() {
 	router.HandleFunc("/tasks/{id:[0-9]+}", updateTask).Methods("PUT")
 	router.HandleFunc("/tasks", getTasks).Methods("GET")
 	router.HandleFunc("/tasks", createTask).Methods("POST")
-	router.HandleFunc("/tasks", deleteTask).Methods("DELETE")
+	router.HandleFunc("/tasks/{id:[0-9]+}", deleteTask).Methods("DELETE")
 
 	// Allow CORS
 	corsHandler := handlers.CORS(
