@@ -9,9 +9,10 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/gorilla/mux"   // package for http router and URL matcher
-	"github.com/joho/godotenv" // package to read .env file
-	_ "github.com/lib/pq"      // package for postgres driver
+	"github.com/gorilla/handlers" // package for CORS
+	"github.com/gorilla/mux"      // package for http router and URL matcher
+	"github.com/joho/godotenv"    // package to read .env file
+	_ "github.com/lib/pq"         // package for postgres driver,
 )
 
 type Task struct {
@@ -45,8 +46,15 @@ func main() {
 	router.HandleFunc("/tasks/{id}", updateTask).Methods("PUT")
 	router.HandleFunc("/tasks/{id}", deleteTask).Methods("DELETE")
 
+	//  CORS setup
+	corsHandlers := handlers.CORS(
+		handlers.AllowedOrigins([]string{"http://localhost:4200"}),                   // allow only this origin
+		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}), // allow only these methods
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
+	)(router)
+
 	// start the server
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(":8080", corsHandlers)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
@@ -203,3 +211,18 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 
 }
+
+// func corsMiddleWare(next http.HandlerFunc) http.HandlerFunc {
+// 	return func(w http.ResponseWriter, r *http.Request) {
+// 		w.Header().Set("Access-Control-Allow-Origin", "*")                 // allow all origins and local development
+// 		w.Header().Set("Access-Control-Allow-Methods", "GET,POST,OPTIONS") // allow all methods
+// 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")     // allow headers
+
+// 		if r.Method == "OPTIONS" { // preflight request
+// 			w.WriteHeader(http.StatusOK)
+// 			return
+// 		}
+
+// 		next(w, r)
+// 	}
+// }

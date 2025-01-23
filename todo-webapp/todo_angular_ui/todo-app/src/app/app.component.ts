@@ -13,15 +13,15 @@ import { loadTasks } from '../shared/actions/tasks.actions';
   standalone:false
 })
 export class AppComponent {
-  title = 'todo-app';
-  // tasks$:Observable<Task[]>;
+  title = 'todo-app'
+  tasks$:Observable<Task[]>;
 
   constructor(private store:Store<{task:TasksState}>){
-    // this.tasks$=this.store.select(state=>state.task.tasks);
+    this.tasks$=this.store.select(state=>state.task.tasks);
   }
 
   ngOnInit(){
     this.store.dispatch(loadTasks());
-    console.log("AppComponent: ngOnInit");
+    this.tasks$.subscribe(data=>console.log(data));
   }
 }

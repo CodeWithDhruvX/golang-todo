@@ -9,6 +9,7 @@ import { TasksEffects } from '../shared/effects/tasks.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app.routing';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RouterModule } from '@angular/router';
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     RouterModule, // integrate redux devtools,
     AppRoutingModule,
+    FormsModule
 
   ],
   providers: [],
