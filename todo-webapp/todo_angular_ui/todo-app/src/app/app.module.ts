@@ -10,6 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppRoutingModule } from './app.routing';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
     RouterModule, // integrate redux devtools,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    DragDropModule
 
   ],
   providers: [],

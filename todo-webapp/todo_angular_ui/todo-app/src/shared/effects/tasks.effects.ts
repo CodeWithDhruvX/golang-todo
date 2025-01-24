@@ -47,7 +47,7 @@ export class TasksEffects {
         this.actions$.pipe(
             ofType(TaskActions.deleteTask),
             mergeMap(action =>
-                this.taskService.updateTask(action.id).pipe(
+                this.taskService.deleteTask(action.id).pipe(
                     map(() => TaskActions.deleteTaskSuccess({ id: action.id })),
                     catchError(error => of(TaskActions.deleteTaskFailure({ error }))
                     ))

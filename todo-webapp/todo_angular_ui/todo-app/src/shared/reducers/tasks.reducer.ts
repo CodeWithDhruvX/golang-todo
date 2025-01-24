@@ -15,7 +15,8 @@ const intitalState: TasksState = {
 export const taskReducer = createReducer(
     intitalState,
     on(TaskActions.loadTaskSuccess, (state, { tasks }) => ({
-        ...state
+        ...state,
+        tasks
     })),
     on(TaskActions.loadTasksFailure, (state, { error }) => ({
         ...state,
